@@ -38,7 +38,7 @@ function QueuePage() {
   // เรียงลำดับออเดอร์ตามเวลา (เก่าสุดขึ้นก่อน)
   const sortedOrders = orders
     .slice()
-    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
   return (
     <div style={{ maxWidth: 800, margin: 'auto', padding: 20 }}>
