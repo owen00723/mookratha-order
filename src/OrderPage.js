@@ -295,7 +295,10 @@ function OrderPage() {
 
       <button onClick={submitOrder} className="btn-submit">ยืนยันสั่งอาหาร</button>
       
-      
+      <style>
+  @import url('https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&display=swap');
+</style>
+
 {/* ปุ่มดูคิว */}
 <div style={{ textAlign: 'center', marginTop: 20 }}>
   <button 
@@ -312,6 +315,7 @@ function OrderPage() {
       fontSize: '16px',
       fontWeight: '600',
       letterSpacing: '0.5px',
+      fontFamily: 'Mitr, sans-serif',
       boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
       transition: 'all 0.3s ease',
       position: 'relative',
@@ -340,9 +344,6 @@ function OrderPage() {
       justifyContent: 'center',
       gap: '8px'
     }}>
-      <span style={{ fontSize: '18px' }}>
-        {showQueue ? '❌' : '🍽️'}
-      </span>
       {showQueue ? 'ปิดคิว' : 'ดูคิวออเดอร์'}
     </span>
   </button>
@@ -361,7 +362,8 @@ function OrderPage() {
     border: '1px solid #c3e6cb',
     margin: '20px auto',
     maxWidth: '400px',
-    fontSize: '14px'
+    fontSize: '14px',
+    fontFamily: 'Mitr, sans-serif'
   }}>
     {message}
   </p>
