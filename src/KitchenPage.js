@@ -190,10 +190,11 @@ function KitchenPage() {
           ) : (
             pendingOrders
               .slice()
-              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+              .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)) // เก่าสุดขึ้นก่อน
               .map(order => (
                 <OrderCard key={order.id} order={order} />
-              ))
+            ))
+
           )}
         </>
       ) : (
