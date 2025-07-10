@@ -677,8 +677,7 @@ select:focus {
 
 /* ปรับปรุง scroll behavior สำหรับ mobile */
 body {
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 /* ป้องกันการซูมใน iOS เมื่อกด input */
