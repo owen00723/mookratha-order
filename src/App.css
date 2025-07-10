@@ -1,0 +1,36 @@
+.nav-fixed {
+  position: fixed; /* ติดตามหน้าจอตลอด */
+  top: 32px;       /* ห่างจากขอบบน 32px */
+  right: 32px;     /* ห่างจากขอบขวา 32px */
+  display: flex;
+  gap: 12px;       /* เว้นระยะระหว่างปุ่ม */
+  z-index: 1000;   /* ให้อยู่บนสุด */
+}
+
+.nav-button {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  margin-right: 0; /* ลบ margin เก่า */
+}
+
+.nav-button + .nav-button {
+  margin-left: 12px; /* เว้นช่องว่างแน่นอน */
+}
+
+.nav-button:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.nav-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+}
