@@ -690,23 +690,3 @@ textarea {
   font-size: 16px;
 }
 
-.order-queue {
-  margin-top: 30px;
-  border-top: 1px solid #ccc;
-  padding-top: 20px;
-}
-
-.queue-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.queue-table th, .queue-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-
-.queue-table th {
-  background-color: #f2f2f2;
-}

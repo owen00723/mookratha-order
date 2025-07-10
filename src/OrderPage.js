@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './OrderPage.css';
 
 const menu = [
     { id: 1, name: 'หมูสไลด์', image: '/img/1.1.png' },
@@ -29,6 +28,7 @@ function OrderPage() {
   const [message, setMessage] = useState('');
   const [isOrdering, setIsOrdering] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showQueue, setShowQueue] = useState(false);
 
   const removeItem = (id) => {
     setCart(prevCart => prevCart.filter(item => item.id !== id));
@@ -87,6 +87,134 @@ function OrderPage() {
     } finally {
       setIsOrdering(false);
     }
+  };
+
+  // Component สำหรับแสดงคิว
+  const QueueComponent = () => {
+    const [orders, setOrders] = useState([]);
+
+    React.useEffect(() => {
+      const fetchOrders = async () => {
+        try {
+          const res = await fetch('https://mookratha-order-1.onrender.com/orders');
+          const data = await res.json();
+          setOrders(data);
+        } catch {
+          setOrders([]);
+        }
+      };
+
+      fetchOrders();
+      const interval = setInterval(fetchOrders, 5000);
+      return () => clearInterval(interval);
+    }, []);
+
+    const getStatusText = (status) => {
+      switch(status) {
+        case 'waiting': return 'รอทำ';
+        case 'cooking': return 'กำลังทำ';
+        case 'done': return 'เสร็จแล้ว';
+        default: return 'ไม่ทราบสถานะ';
+      }
+    };
+
+    const formatDateTime = (dateString) => {
+      return new Date(dateString).toLocaleString('th-TH', { 
+        dateStyle: 'short', 
+        timeStyle: 'short' 
+      });
+    };
+
+    const sortedOrders = orders
+      .slice()
+      .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
+    return (
+      <div style={{ marginTop: 20, padding: 20, border: '1px solid #ddd', borderRadius: 8 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <h3>🍽️ คิวออเดอร์</h3>
+          <button 
+            onClick={() => setShowQueue(false)}
+            style={{
+              padding: '5px 10px',
+              backgroundColor: '#dc3545',
+              color: 'white',
+              border: 'none',
+              borderRadius: 3,
+              cursor: 'pointer'
+            }}
+          >
+            ปิด
+          </button>
+        </div>
+
+        {orders.length === 0 ? (
+          <p>ยังไม่มีออเดอร์ในขณะนี้</p>
+        ) : (
+          <div>
+            {sortedOrders.map((order, index) => (
+              <div 
+                key={order.id} 
+                style={{ 
+                  border: '1px solid #ddd', 
+                  marginBottom: 10, 
+                  padding: 10,
+                  borderRadius: 5,
+                  backgroundColor: 
+                    order.status === 'done' ? '#e8f5e8' : 
+                    order.status === 'cooking' ? '#fff3cd' : 
+                    '#f8f9fa'
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
+                  <strong>คิวที่ {index + 1} - โต๊ะ {order.tableNumber}</strong>
+                  <span 
+                    style={{ 
+                      padding: '3px 8px', 
+                      borderRadius: 10,
+                      backgroundColor: 
+                        order.status === 'done' ? '#28a745' : 
+                        order.status === 'cooking' ? '#ffc107' : 
+                        '#6c757d',
+                      color: 'white',
+                      fontSize: 12
+                    }}
+                  >
+                    {getStatusText(order.status)}
+                  </span>
+                </div>
+
+                <div style={{ fontSize: 14, color: '#666' }}>
+                  เลขที่ออเดอร์: {order.id} | เวลา: {formatDateTime(order.created_at)}
+                </div>
+
+                <div style={{ marginTop: 5 }}>
+                  <strong>รายการ:</strong> {order.items.map(item => `${item.name} (${item.quantity})`).join(', ')}
+                </div>
+
+                {order.status === 'waiting' && (
+                  <div style={{ color: '#666', fontSize: 12, fontStyle: 'italic', marginTop: 5 }}>
+                    💡 อยู่ในคิวที่ {index + 1}
+                  </div>
+                )}
+
+                {order.status === 'cooking' && (
+                  <div style={{ color: '#ff6b35', fontSize: 12, fontWeight: 'bold', marginTop: 5 }}>
+                    🔥 กำลังเตรียมอาหาร...
+                  </div>
+                )}
+
+                {order.status === 'done' && (
+                  <div style={{ color: '#28a745', fontSize: 12, fontWeight: 'bold', marginTop: 5 }}>
+                    ✅ พร้อมเสิร์ฟแล้ว!
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -165,35 +293,28 @@ function OrderPage() {
       )}
 
       <button onClick={submitOrder} className="btn-submit">ยืนยันสั่งอาหาร</button>
-      {queueOrders.length > 0 && (
-  <div className="order-queue">
-    <h4>📋 คิวออเดอร์ปัจจุบัน ({queueOrders.length})</h4>
-    <table className="queue-table">
-      <thead>
-        <tr>
-          <th>ลำดับ</th>
-          <th>โต๊ะ</th>
-          <th>เวลา</th>
-          <th>สถานะ</th>
-        </tr>
-      </thead>
-      <tbody>
-        {queueOrders
-          .slice()
-          .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
-          .map((order, index) => (
-            <tr key={order.id}>
-              <td>{index + 1}</td>
-              <td>โต๊ะ {order.tableNumber}</td>
-              <td>{new Date(order.created_at).toLocaleTimeString('th-TH')}</td>
-              <td>{order.status === 'waiting' ? 'รอทำ' : 'กำลังทำ'}</td>
-            </tr>
-          ))}
-      </tbody>
-    </table>
-  </div>
-)}
+      
+      {/* ปุ่มดูคิว */}
+      <div style={{ textAlign: 'center', marginTop: 20 }}>
+        <button 
+          onClick={() => setShowQueue(!showQueue)}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#17a2b8',
+            color: 'white',
+            border: 'none',
+            borderRadius: 5,
+            cursor: 'pointer',
+            fontSize: 16
+          }}
+        >
+          {showQueue ? 'ปิดคิว' : '🍽️ ดูคิวออเดอร์'}
+        </button>
+      </div>
 
+      {/* แสดงคิวเมื่อกดปุ่ม */}
+      {showQueue && <QueueComponent />}
+      
       {message && !showSuccess && <p className="success-message">{message}</p>}
 
       {isOrdering && (
