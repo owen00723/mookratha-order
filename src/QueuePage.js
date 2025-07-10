@@ -7,7 +7,9 @@ function QueuePage() {
     try {
       const res = await fetch('https://mookratha-order-1.onrender.com/orders');
       const data = await res.json();
-      setOrders(data);
+      // สลับลำดับข้อมูลใหม่ให้กลายเป็น Stack (ใหม่อยู่บน)
+      const stackData = data.slice().reverse();
+      setOrders(stackData);
     } catch {
       setOrders([]);
     }
@@ -35,25 +37,23 @@ function QueuePage() {
     });
   };
 
-  // เรียงลำดับออเดอร์ตามเวลา (ใหม่สุดขึ้นก่อน)
-  const sortedOrders = orders
-    .slice()
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  // ไม่ต้อง sort แล้ว เพราะข้อมูลเป็น stack เรียบร้อย
+  const stackOrders = orders;
 
   return (
     <div style={{ maxWidth: 800, margin: 'auto', padding: 20 }}>
-      <h2>🍽️ คิวออเดอร์</h2>
+      <h2>🍽️ คิวออเดอร์ (Stack)</h2>
       <p style={{ marginBottom: 20, color: '#666' }}>
         ตรวจสอบสถานะออเดอร์ของคุณ
       </p>
 
-      {orders.length === 0 ? (
+      {stackOrders.length === 0 ? (
         <div style={{ textAlign: 'center', padding: 40 }}>
           <p>ยังไม่มีออเดอร์ในขณะนี้</p>
         </div>
       ) : (
         <div>
-          {sortedOrders.map((order, index) => (
+          {stackOrders.map((order, index) => (
             <div
               key={order.id}
               style={{
@@ -74,7 +74,7 @@ function QueuePage() {
                 marginBottom: 10
               }}>
                 <h3 style={{ margin: 0 }}>
-                  คิวที่ {sortedOrders.length - index} - โต๊ะ {order.tableNumber}
+                  คิวที่ {index + 1} - โต๊ะ {order.tableNumber}
                 </h3>
                 <div
                   style={{
@@ -114,7 +114,7 @@ function QueuePage() {
 
               {order.status === 'waiting' && (
                 <div style={{ color: '#666', fontSize: 14, fontStyle: 'italic' }}>
-                  💡 ออเดอร์ของคุณอยู่ในคิวที่ {sortedOrders.length - index} รอสักครู่นะครับ
+                  💡 ออเดอร์ของคุณอยู่ในคิวที่ {index + 1} รอสักครู่นะครับ
                 </div>
               )}
 
