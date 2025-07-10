@@ -24,11 +24,12 @@ body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
   margin: 0;
-  padding: 20px;
+  padding: 10px;
+  font-size: 14px;
 }
 
 .order-page {
-  padding: 30px;
+  padding: 20px;
   max-width: 700px;
   margin: 0 auto;
   font-family: 'Mitr', sans-serif;
@@ -52,16 +53,16 @@ body {
 .order-page h2 {
   color: var(--dark-text);
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 2.2em;
+  margin-bottom: 20px;
+  font-size: 1.8em;
   font-weight: 600;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .order-page h3 {
   color: var(--dark-text);
-  margin: 25px 0 15px 0;
-  font-size: 1.3em;
+  margin: 20px 0 15px 0;
+  font-size: 1.2em;
   font-weight: 500;
   border-bottom: 2px solid var(--primary-color);
   padding-bottom: 8px;
@@ -71,14 +72,14 @@ body {
 /* Table Selection */
 .table-select {
   background: var(--light-bg);
-  padding: 20px;
+  padding: 15px;
   border-radius: var(--border-radius);
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   border: 1px solid var(--border-color);
 }
 
 .table-select label {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 500;
   color: var(--dark-text);
   display: block;
@@ -91,10 +92,18 @@ body {
   border-radius: 8px;
   border: 2px solid var(--border-color);
   background: white;
-  font-size: 1em;
+  font-size: 16px; /* ป้องกันการซูมใน iOS */
   font-family: 'Mitr', sans-serif;
   transition: var(--transition);
   cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
 }
 
 .table-select select:focus {
@@ -109,49 +118,63 @@ body {
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .menu-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
+  justify-content: space-between;
+  padding: 12px 15px;
   background: white;
   border: 2px solid var(--border-color);
   border-radius: 10px;
   transition: var(--transition);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  min-height: 80px;
 }
 
 .menu-item:hover {
   border-color: var(--primary-color);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-hover);
 }
 
 .menu-item span {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 500;
   color: var(--dark-text);
+  flex: 1;
+  padding-left: 10px;
+}
+
+.menu-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: white;
+  border: 1px solid #ddd;
+  flex-shrink: 0;
 }
 
 /* Quantity Control */
 .quantity-control {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   background: var(--light-bg);
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 25px;
   border: 1px solid var(--border-color);
+  flex-shrink: 0;
 }
 
 .quantity-control button {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   color: white;
   border: none;
@@ -162,6 +185,7 @@ body {
   justify-content: center;
   transition: var(--transition);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  touch-action: manipulation; /* ป้องกันการซูมใน iOS */
 }
 
 .quantity-control button:first-child {
@@ -188,21 +212,21 @@ body {
 }
 
 .quantity {
-  min-width: 32px;
+  min-width: 28px;
   text-align: center;
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 600;
   color: var(--dark-text);
   background: white;
   border-radius: 6px;
-  padding: 4px 8px;
+  padding: 4px 6px;
 }
 
 /* Cart Table */
 .cart-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
+  margin: 15px 0;
   background: white;
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -211,9 +235,10 @@ body {
 
 .cart-table th,
 .cart-table td {
-  padding: 16px;
+  padding: 12px 8px;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
+  font-size: 0.9em;
 }
 
 .cart-table th {
@@ -243,23 +268,24 @@ body {
 .cart-quantity-control {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: var(--light-bg);
-  padding: 6px 10px;
+  padding: 4px 8px;
   border-radius: 20px;
   border: 1px solid var(--border-color);
 }
 
 .cart-quantity-btn {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   color: white;
   border: none;
   cursor: pointer;
   transition: var(--transition);
+  touch-action: manipulation;
 }
 
 .cart-quantity-btn.minus {
@@ -279,13 +305,14 @@ body {
 }
 
 .cart-quantity-display {
-  min-width: 24px;
+  min-width: 20px;
   text-align: center;
   font-weight: 600;
   color: var(--dark-text);
   background: white;
   border-radius: 4px;
-  padding: 2px 6px;
+  padding: 2px 4px;
+  font-size: 0.9em;
 }
 
 /* Delete Button */
@@ -293,13 +320,14 @@ body {
   background: linear-gradient(135deg, var(--danger-color), #c82333);
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 0.8em;
   font-weight: 500;
   transition: var(--transition);
   font-family: 'Mitr', sans-serif;
+  touch-action: manipulation;
 }
 
 .cart-delete-btn:hover {
@@ -313,18 +341,19 @@ body {
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
   border: none;
-  padding: 16px 32px;
+  padding: 14px 28px;
   border-radius: 50px;
-  font-size: 1.2em;
+  font-size: 1.1em;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 25px;
+  margin-top: 20px;
   user-select: none;
   transition: var(--transition);
   font-family: 'Mitr', sans-serif;
   display: block;
   width: 100%;
   box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  touch-action: manipulation;
 }
 
 .btn-submit:hover {
@@ -340,11 +369,11 @@ body {
 /* Success Message */
 .success-message {
   color: var(--success-color);
-  margin-top: 20px;
+  margin-top: 15px;
   font-weight: 600;
-  font-size: 1.1em;
+  font-size: 1em;
   text-align: center;
-  padding: 15px;
+  padding: 12px;
   background: rgba(40, 167, 69, 0.1);
   border-radius: 8px;
   border: 1px solid rgba(40, 167, 69, 0.3);
@@ -396,22 +425,22 @@ body {
 
 .order-success-content {
   background: white;
-  padding: 40px 50px;
+  padding: 30px 40px;
   border-radius: var(--border-radius);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  font-size: 1.4em;
+  font-size: 1.2em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   animation: fadeInScale 0.4s ease forwards;
   text-align: center;
-  max-width: 90%;
+  max-width: 85%;
   font-family: 'Mitr', sans-serif;
 }
 
 .checkmark {
-  font-size: 4em;
+  font-size: 3em;
   color: var(--success-color);
   animation: bounceCheck 0.6s ease forwards;
   filter: drop-shadow(0 4px 8px rgba(40, 167, 69, 0.3));
@@ -439,8 +468,8 @@ body {
   text-align: center;
   color: #6c757d;
   font-style: italic;
-  margin: 20px 0;
-  padding: 20px;
+  margin: 15px 0;
+  padding: 15px;
   background: var(--light-bg);
   border-radius: 8px;
   border: 1px dashed var(--border-color);
@@ -448,37 +477,146 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  body {
+    padding: 5px;
+    font-size: 14px;
+  }
+  
   .order-page {
-    padding: 20px;
-    margin: 10px;
+    padding: 15px;
+    margin: 5px;
   }
   
   .order-page h2 {
-    font-size: 1.8em;
+    font-size: 1.6em;
+    margin-bottom: 15px;
+  }
+  
+  .order-page h3 {
+    font-size: 1.1em;
+    margin: 15px 0 10px 0;
+  }
+  
+  .table-select {
+    padding: 12px;
+    margin-bottom: 15px;
   }
   
   .menu-item {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
+    padding: 10px 12px;
+    min-height: 70px;
+  }
+  
+  .menu-item span {
+    font-size: 0.95em;
+  }
+  
+  .menu-image {
+    width: 45px;
+    height: 45px;
   }
   
   .quantity-control {
-    order: 2;
+    gap: 6px;
+    padding: 5px 8px;
+  }
+  
+  .quantity-control button {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+  
+  .quantity {
+    min-width: 24px;
+    font-size: 0.9em;
   }
   
   .cart-table {
-    font-size: 0.9em;
+    font-size: 0.85em;
   }
   
   .cart-table th,
   .cart-table td {
-    padding: 12px 8px;
+    padding: 8px 6px;
+  }
+  
+  .cart-quantity-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+  }
+  
+  .cart-quantity-display {
+    font-size: 0.8em;
+  }
+  
+  .cart-delete-btn {
+    padding: 5px 10px;
+    font-size: 0.75em;
+  }
+  
+  .btn-submit {
+    padding: 12px 24px;
+    font-size: 1em;
   }
   
   .order-success-content {
-    padding: 30px 25px;
-    font-size: 1.2em;
+    padding: 25px 20px;
+    font-size: 1.1em;
+    max-width: 95%;
+  }
+  
+  .checkmark {
+    font-size: 2.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-page {
+    padding: 12px;
+  }
+  
+  .order-page h2 {
+    font-size: 1.4em;
+  }
+  
+  .menu-item {
+    padding: 8px 10px;
+    min-height: 60px;
+  }
+  
+  .menu-item span {
+    font-size: 0.9em;
+  }
+  
+  .menu-image {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .quantity-control button {
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+  }
+  
+  .cart-table {
+    font-size: 0.8em;
+  }
+  
+  .cart-table th,
+  .cart-table td {
+    padding: 6px 4px;
+  }
+  
+  .order-success-content {
+    padding: 20px 15px;
+    font-size: 1em;
+  }
+  
+  .checkmark {
+    font-size: 2em;
   }
 }
 
@@ -510,19 +648,45 @@ select:focus {
   }
 }
 
-.menu-image {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-right: 10px;
-  background-color: white;  /* เพิ่มพื้นหลังขาว */
-  /* ถ้าต้องการกรอบก็เพิ่ม border ด้วย */
-  border: 1px solid #ddd;
+/* เพิ่ม styles สำหรับ touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .menu-item:hover {
+    transform: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .quantity-control button:hover {
+    transform: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  }
+  
+  .cart-quantity-btn:hover {
+    transform: none;
+  }
+  
+  .cart-delete-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .btn-submit:hover {
+    transform: none;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+  }
 }
 
-.menu-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+/* ปรับปรุง scroll behavior สำหรับ mobile */
+body {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+/* ป้องกันการซูมใน iOS เมื่อกด input */
+input[type="number"],
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+  font-size: 16px;
 }
