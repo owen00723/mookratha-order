@@ -296,9 +296,9 @@ function OrderPage() {
       <button onClick={submitOrder} className="btn-submit">ยืนยันสั่งอาหาร</button>
       
       {/* ปุ่มดูคิว */}
-     <div style={{ textAlign: 'center', marginTop: 20 }}>
+      <div style={{ textAlign: 'center', marginTop: 20 }}>
         <button 
-          onClick={() => navigate('/queue')} // เปลี่ยนเส้นทางไปหน้าใหม่
+          onClick={() => setShowQueue(!showQueue)}
           style={{
             padding: '10px 20px',
             backgroundColor: '#17a2b8',
@@ -309,11 +309,12 @@ function OrderPage() {
             fontSize: 16
           }}
         >
-          🍽️ ดูคิวออเดอร์
+          {showQueue ? 'ปิดคิว' : '🍽️ ดูคิวออเดอร์'}
         </button>
       </div>
 
-      {/* ไม่ต้องมี showQueue และ <QueueComponent /> อีกต่อไป */}
+      {/* แสดงคิวเมื่อกดปุ่ม */}
+      {showQueue && <QueueComponent />}
       
       {message && !showSuccess && <p className="success-message">{message}</p>}
 
