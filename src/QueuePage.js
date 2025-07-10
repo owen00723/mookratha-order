@@ -7,10 +7,18 @@ function QueuePage() {
     try {
       const res = await fetch('https://mookratha-order-1.onrender.com/orders');
       const data = await res.json();
-      // สลับลำดับข้อมูลใหม่ให้กลายเป็น Stack (ใหม่อยู่บน)
-      const stackData = data.slice().reverse();
+
+      // ฟังก์ชันแปลงวันที่ รองรับ 'YYYY-MM-DD HH:mm:ss'
+      const parseDate = (str) => new Date(str.replace(' ', 'T'));
+
+      // เรียงข้อมูลจากใหม่ไปเก่า (คิวล่าสุดขึ้นก่อน)
+      const stackData = data.slice().sort((a, b) => parseDate(b.created_at) - parseDate(a.created_at));
+
+      console.log('Sorted created_at:', stackData.map(o => o.created_at));
+
       setOrders(stackData);
-    } catch {
+    } catch (error) {
+      console.error('Fetch orders error:', error);
       setOrders([]);
     }
   };
@@ -37,7 +45,6 @@ function QueuePage() {
     });
   };
 
-  // ไม่ต้อง sort แล้ว เพราะข้อมูลเป็น stack เรียบร้อย
   const stackOrders = orders;
 
   return (
