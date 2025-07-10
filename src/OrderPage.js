@@ -295,34 +295,101 @@ function OrderPage() {
 
       <button onClick={submitOrder} className="btn-submit">ยืนยันสั่งอาหาร</button>
       
-      {/* ปุ่มดูคิว */}
-      <div style={{ textAlign: 'center', marginTop: 20 }}>
-        <button 
-          onClick={() => setShowQueue(!showQueue)}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#17a2b8',
-            color: 'white',
-            border: 'none',
-            borderRadius: 5,
-            cursor: 'pointer',
-            fontSize: 16
-          }}
-        >
-          {showQueue ? 'ปิดคิว' : '🍽️ ดูคิวออเดอร์'}
-        </button>
-      </div>
-
-      {/* แสดงคิวเมื่อกดปุ่ม */}
-      {showQueue && <QueueComponent />}
       
-      {message && !showSuccess && <p className="success-message">{message}</p>}
+{/* ปุ่มดูคิว */}
+<div style={{ textAlign: 'center', marginTop: 20 }}>
+  <button 
+    onClick={() => setShowQueue(!showQueue)}
+    style={{
+      padding: '12px 24px',
+      background: showQueue 
+        ? 'linear-gradient(135deg, #ff6b6b, #ee5a52)' 
+        : 'linear-gradient(135deg, #17a2b8, #138496)',
+      color: 'white',
+      border: 'none',
+      borderRadius: '25px',
+      cursor: 'pointer',
+      fontSize: '16px',
+      fontWeight: '600',
+      letterSpacing: '0.5px',
+      boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+      transition: 'all 0.3s ease',
+      position: 'relative',
+      overflow: 'hidden',
+      transform: 'translateY(0)',
+      minWidth: '180px'
+    }}
+    onMouseEnter={(e) => {
+      e.target.style.transform = 'translateY(-2px)';
+      e.target.style.boxShadow = '0 6px 20px rgba(0,0,0,0.3)';
+    }}
+    onMouseLeave={(e) => {
+      e.target.style.transform = 'translateY(0)';
+      e.target.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+    }}
+    onMouseDown={(e) => {
+      e.target.style.transform = 'translateY(1px)';
+    }}
+    onMouseUp={(e) => {
+      e.target.style.transform = 'translateY(-2px)';
+    }}
+  >
+    <span style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center',
+      gap: '8px'
+    }}>
+      <span style={{ fontSize: '18px' }}>
+        {showQueue ? '❌' : '🍽️'}
+      </span>
+      {showQueue ? 'ปิดคิว' : 'ดูคิวออเดอร์'}
+    </span>
+  </button>
+</div>
 
-      {isOrdering && (
-        <div className="overlay">
-          <div className="loader"></div>
-        </div>
-      )}
+{/* แสดงคิวเมื่อกดปุ่ม */}
+{showQueue && <QueueComponent />}
+
+{message && !showSuccess && (
+  <p className="success-message" style={{
+    textAlign: 'center',
+    padding: '10px 20px',
+    backgroundColor: '#d4edda',
+    color: '#155724',
+    borderRadius: '8px',
+    border: '1px solid #c3e6cb',
+    margin: '20px auto',
+    maxWidth: '400px',
+    fontSize: '14px'
+  }}>
+    {message}
+  </p>
+)}
+
+{isOrdering && (
+  <div className="overlay" style={{
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 9999
+  }}>
+    <div className="loader" style={{
+      width: '40px',
+      height: '40px',
+      border: '4px solid #f3f3f3',
+      borderTop: '4px solid #17a2b8',
+      borderRadius: '50%',
+      animation: 'spin 1s linear infinite'
+    }}></div>
+  </div>
+)}
 
       {showSuccess && (
         <div className="order-success-overlay" onClick={() => setShowSuccess(false)}>
