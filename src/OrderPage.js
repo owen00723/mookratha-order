@@ -165,6 +165,34 @@ function OrderPage() {
       )}
 
       <button onClick={submitOrder} className="btn-submit">ยืนยันสั่งอาหาร</button>
+      {queueOrders.length > 0 && (
+  <div className="order-queue">
+    <h4>📋 คิวออเดอร์ปัจจุบัน ({queueOrders.length})</h4>
+    <table className="queue-table">
+      <thead>
+        <tr>
+          <th>ลำดับ</th>
+          <th>โต๊ะ</th>
+          <th>เวลา</th>
+          <th>สถานะ</th>
+        </tr>
+      </thead>
+      <tbody>
+        {queueOrders
+          .slice()
+          .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+          .map((order, index) => (
+            <tr key={order.id}>
+              <td>{index + 1}</td>
+              <td>โต๊ะ {order.tableNumber}</td>
+              <td>{new Date(order.created_at).toLocaleTimeString('th-TH')}</td>
+              <td>{order.status === 'waiting' ? 'รอทำ' : 'กำลังทำ'}</td>
+            </tr>
+          ))}
+      </tbody>
+    </table>
+  </div>
+)}
 
       {message && !showSuccess && <p className="success-message">{message}</p>}
 

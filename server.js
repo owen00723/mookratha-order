@@ -123,3 +123,21 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+const [queueOrders, setQueueOrders] = useState([]);
+
+useEffect(() => {
+  const fetchQueueOrders = async () => {
+    try {
+      const res = await fetch('https://mookratha-order-1.onrender.com/orders');
+      const data = await res.json();
+      setQueueOrders(data.filter(order => order.status !== 'done'));
+    } catch (error) {
+      console.error('ไม่สามารถโหลดคิวออเดอร์:', error);
+    }
+  };
+
+  fetchQueueOrders();
+  const interval = setInterval(fetchQueueOrders, 10000); // อัปเดตทุก 10 วินาที
+  return () => clearInterval(interval);
+}, []);
+
