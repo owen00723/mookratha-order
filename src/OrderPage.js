@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './OrderPage.css'; // เพิ่มบรรทัดนี้เพื่อลิ้งไฟล์ CSS
 
 const menu = [
     { id: 1, name: 'หมูสไลด์', image: '/img/1.1.png' },
