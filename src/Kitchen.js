@@ -5,7 +5,7 @@ function KitchenPage() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch('https://foodpig.onrender.com/orders');
+      const res = await fetch('https://mookratha-order-1.onrender.com/orders');
       const data = await res.json();
       setOrders(data);
     } catch {
@@ -21,7 +21,7 @@ function KitchenPage() {
 
   const updateStatus = async (id, status) => {
     try {
-      await fetch(`https://foodpig.onrender.com/orders/${id}/status`, {
+      await fetch(`https://mookratha-order-1.onrender.com/orders/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
@@ -35,7 +35,7 @@ function KitchenPage() {
   const deleteOrder = async (id) => {
     if (!window.confirm('ต้องการลบออเดอร์นี้ใช่หรือไม่?')) return;
     try {
-      await fetch(`https://foodpig.onrender.com/orders/${id}`, {
+      await fetch(`https://mookratha-order-1.onrender.com/orders/${id}`, {
         method: 'DELETE',
       });
       fetchOrders();

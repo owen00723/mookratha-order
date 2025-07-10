@@ -8,7 +8,7 @@ function KitchenPage() {
   // ฟังก์ชันสำหรับดึงข้อมูลออเดอร์จาก Backend
   const fetchOrders = async () => {
     try {
-      const res = await fetch('https://foodpig.onrender.com/orders');
+      const res = await fetch('https://mookratha-order-1.onrender.com/orders');
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
@@ -31,7 +31,7 @@ function KitchenPage() {
   const updateStatus = async (id, status) => {
     console.log(`Attempting to update status for Order ID: ${id}, New Status: ${status}`);
     try {
-      const res = await fetch(`https://foodpig.onrender.com/orders/${id}/status`, {
+      const res = await fetch(`https://mookratha-order-1.onrender.com/orders/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
@@ -48,7 +48,7 @@ function KitchenPage() {
     if (!window.confirm('ต้องการลบออเดอร์นี้ใช่หรือไม่?')) return;
     console.log(`Attempting to delete Order ID: ${id}`);
     try {
-      const res = await fetch(`https://foodpig.onrender.com/orders/${id}`, { method: 'DELETE' });
+      const res = await fetch(`https://mookratha-order-1.onrender.com/orders/${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       fetchOrders();
     } catch (error) {
@@ -61,7 +61,7 @@ function KitchenPage() {
     if (!window.confirm('ต้องการลบออเดอร์ทั้งหมดที่สถานะเสร็จแล้วใช่หรือไม่?')) return;
     console.log('Attempting to delete all done orders.');
     try {
-      const res = await fetch('https://foodpig.onrender.com/orders', { method: 'DELETE' });
+      const res = await fetch('https://mookratha-order-1.onrender.com/orders', { method: 'DELETE' });
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       fetchOrders();
     } catch (error) {

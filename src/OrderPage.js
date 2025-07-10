@@ -64,7 +64,7 @@ function OrderPage() {
 
     try {
       setIsOrdering(true);
-      const res = await fetch('https://foodpig.onrender.com/orders', {
+      const res = await fetch('https://mookratha-order-1.onrender.com/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tableNumber: Number(tableNumber), items: cart }),
